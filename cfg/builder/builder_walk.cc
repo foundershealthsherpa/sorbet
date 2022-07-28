@@ -503,8 +503,7 @@ BasicBlock *CFGBuilder::walk(CFGContext cctx, ast::ExpressionPtr &what, BasicBlo
                     auto sym = cnst.symbol;
                     if (sym.isClassOrModule()) {
                         auto klass = sym.asClassOrModuleRef();
-                        if (klass.data(cctx.ctx)->flags.externalTypeImplicitlyUntyped &&
-                            !klass.isLegacyStdlibGeneric()) {
+                        if (klass.data(cctx.ctx)->flags.externalTypeImplicitlyUntyped) {
                             auto errLoc = (s.funLoc.exists() && !s.funLoc.empty()) ? s.funLoc : s.loc;
                             if (auto e = cctx.ctx.beginError(errLoc, core::errors::CFG::TypeArgsGenericClassNew)) {
                                 e.setHeader("`{}` is a generic class, and requires being instantiated with explicit "
